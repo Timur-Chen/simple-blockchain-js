@@ -9,6 +9,7 @@ class Blockchain {
 
         // Blockchain boshlanishida genesis block yaratamiz
         this.chain = [this.createGenesisBlock()];
+        this.difficulty = 2;
 
     }
 
@@ -50,6 +51,8 @@ class Blockchain {
             previousBlock.hash // oldingi blok hash
 
         );
+        
+        newBlock.mineBlock(this.difficulty);
 
         // Yangi blokni chain ga qo‘shamiz
         this.chain.push(newBlock);

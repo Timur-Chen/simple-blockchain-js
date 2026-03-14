@@ -19,6 +19,9 @@ class Block {
         // Oldingi blokning hash qiymati
         this.previousHash = previousHash;
 
+        // Proof-of-work uchun nonce qiymati
+        this.nonce = 0;
+
         // Ushbu blokning hash qiymatini hisoblaymiz
         this.hash = this.calculateHash();
     }
@@ -28,15 +31,25 @@ class Block {
 
         // SHA256 algoritmi yordamida hash yaratamiz
         return SHA256(
-
             // Blok ma'lumotlarini birlashtiramiz
             this.index +
             this.previousHash +
             this.timestamp +
-            JSON.stringify(this.data)
-
+            JSON.stringify(this.data) +
+            this.nonce
         ).toString(); // Hashni string ko‘rinishga o‘tkazamiz
     }
+    
+    // Proof-of-work mining funksiyasi
+mineBlock(difficulty) {
+
+    while (this.hash.substring(0, difficulty) !== "0".repeat(difficulty)) {
+        this.nonce++;
+        this.hash = this.calculateHash();
+    }
+
+    console.log("Block mined:", this.hash);
+}
 
 }
 
